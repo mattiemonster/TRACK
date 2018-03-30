@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using C3.MonoGame;
 using System.Collections.Generic;
+using System.IO;
 using System;
 
 namespace TRACK
@@ -31,6 +32,7 @@ namespace TRACK
         public bool hasBegun = false;
         public bool newHighscore = false;
         public List<Block> blocks = new List<Block>();
+        public List<PlusOne> plusOnes = new List<PlusOne>();
         public Random r = new Random();
         public KeyboardState ks;
         public KeyboardState oldKs;
@@ -107,6 +109,20 @@ namespace TRACK
             timer = 5 * 60;
             lerpSpeed = 0.07f;
         }
+
+        void Load()
+        {
+            //StreamReader fr = new StreamReader("save.txt");
+            //if (fr == null)
+            //{
+            //    StreamWriter fw = new StreamWriter("save.txt");
+            //}
+        }
+
+        void Save()
+        {
+
+        }
         
         protected override void Update(GameTime gameTime)
         {
@@ -147,10 +163,16 @@ namespace TRACK
                     if (blocks[i].isDone)
                     {
                         blocks.RemoveAt(i);
+                        plusOnes.Clear();
                         Values.blockRemoved.Play(1f, (float)r.NextDouble(), 1f);
                         timer = 60 * 5 + (score * 3);
                         lerpSpeed = lerpSpeed - 0.001f;
                         blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
+                        i = r.Next(1, 101);
+                        if (i == 50)
+                        {
+                            plusOnes.Add(new PlusOne(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40)));
+                        }
                         score += 1;
                     }
 
@@ -167,6 +189,25 @@ namespace TRACK
                         ResetGame();
                     }
                 }
+
+                for (int i = 0; i < plusOnes.Count; i++)
+                {
+                    plusOnes[i].Update();
+
+                    if (mBB.Intersects(plusOnes[i].bb))
+                    {
+                        plusOnes[i].Lerp();
+                    }
+
+                    if (plusOnes[i].isDone)
+                    {
+                        plusOnes.RemoveAt(i);
+                        Values.plusOneSound.Play(1f, (float)r.NextDouble(), 1f);
+                        lerpSpeed = lerpSpeed + 0.001f;
+                        score += 1;
+                    }
+                }
+
                 timer--;
             }
 
@@ -314,6 +355,11 @@ namespace TRACK
                     for (int i = 0; i < blocks.Count; i++)
                     {
                         blocks[i].Render(spriteBatch);
+                    }
+
+                    for (int i = 0; i < plusOnes.Count; i++)
+                    {
+                        plusOnes[i].Render(spriteBatch);
                     }
                 }
             }
