@@ -13,6 +13,7 @@ namespace TRACK
     class Values
     {
         public static Texture2D crosshair;
+        public static Texture2D trackingOrb;
         public static SpriteFont titleFont;
         public static SpriteFont descriptionFont;
         public static SoundEffect blockRemoved;
@@ -30,6 +31,7 @@ namespace TRACK
         public static void LoadContent(ContentManager cm)
         {
             crosshair = cm.Load<Texture2D>("Textures/Crosshair");
+            trackingOrb = cm.Load<Texture2D>("Textures/TrackingOrb");
             titleFont = cm.Load<SpriteFont>("Fonts/TitleFont");
             descriptionFont = cm.Load<SpriteFont>("Fonts/DescriptionFont");
             blockRemoved = cm.Load<SoundEffect>("Sounds/RemoveBlock");

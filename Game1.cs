@@ -12,7 +12,7 @@ namespace TRACK
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        // 0 = menu, 1 = game, 2 = game over
+        // 0 = menu, 1 = game, 2 = game over, 3 = game over, 4 = shop
         public int state = 0;
         public int mX, mY;
         public int score = 0, highScore = 0;
@@ -25,6 +25,7 @@ namespace TRACK
         public int shButtonTextLength;
         public int shButtonTextHeight;
         public int timer = 60 * 5;
+        public int currency = 10;
         public int previousScore = 0;
         public float lerpSpeed = 0.07f;
         public bool hasBegun = false;
@@ -67,7 +68,7 @@ namespace TRACK
             sButtonTextLength = (int)sButtonSize.X;
             sButtonTextHeight = (int)sButtonSize.Y;
 
-            shButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 100, (graphics.PreferredBackBufferHeight / 3) - 25, 200, 50);
+            shButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 100, (graphics.PreferredBackBufferHeight / 3) + 50, 200, 50);
             Vector2 shButtonSize = Values.titleFont.MeasureString("Shop");
             shButtonTextLength = (int)shButtonSize.X;
             shButtonTextHeight = (int)shButtonSize.Y;
@@ -232,6 +233,8 @@ namespace TRACK
                    Start Button */
                 spriteBatch.DrawString(Values.titleFont, Values.gameName, Values.gameNamePos, Color.White);
                 spriteBatch.DrawString(Values.descriptionFont, "HIGHSCORE: " + highScore, Values.gameText1Pos, Color.White);
+                spriteBatch.Draw(Values.trackingOrb, Values.gameText1p2Pos, Color.White);
+                spriteBatch.DrawString(Values.descriptionFont, currency.ToString(), Values.gameText1p2Pos + new Vector2(40, 8), Color.White);
                 spriteBatch.DrawString(Values.descriptionFont, Values.creditsText, new Vector2(5, graphics.PreferredBackBufferHeight - 18), Color.White);
                 if (mBB.Intersects(sButtonBB))
                 {
@@ -242,6 +245,17 @@ namespace TRACK
                 }
                 spriteBatch.DrawString(Values.titleFont, "Start", new Vector2((graphics.PreferredBackBufferWidth / 2) - sButtonTextLength / 2, 
                     (graphics.PreferredBackBufferHeight / 3) - sButtonTextHeight / 2), Color.Black);
+
+                if (mBB.Intersects(shButtonBB))
+                {
+                    spriteBatch.FillRectangle(shButtonBB, Color.Gray);
+                }
+                else
+                {
+                    spriteBatch.FillRectangle(shButtonBB, Color.White);
+                }
+                spriteBatch.DrawString(Values.titleFont, "Shop", new Vector2((graphics.PreferredBackBufferWidth / 2) - shButtonTextLength / 2,
+                    (graphics.PreferredBackBufferHeight / 3) - (shButtonTextHeight / 2) + 75), Color.Black);
 
                 if (mBB.Intersects(eButtonBB))
                 {
