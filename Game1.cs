@@ -148,7 +148,7 @@ namespace TRACK
                     {
                         blocks.RemoveAt(i);
                         Values.blockRemoved.Play(1f, (float)r.NextDouble(), 1f);
-                        timer = 60 * 5 + (score * 2);
+                        timer = 60 * 5 + (score * 3);
                         lerpSpeed = lerpSpeed - 0.001f;
                         blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
                         score += 1;
@@ -156,6 +156,7 @@ namespace TRACK
 
                     if (timer == 0)
                     {
+                        currency += score;
                         state = 2;
                         if (score > highScore)
                         {
@@ -337,6 +338,8 @@ namespace TRACK
                 {
                     spriteBatch.FillRectangle(sButtonBB, Color.White);
                 }
+                spriteBatch.Draw(Values.trackingOrb, Values.gameText1p2Pos, Color.White);
+                spriteBatch.DrawString(Values.descriptionFont, "+" + previousScore, Values.gameText1p2Pos + new Vector2(40, 8), Color.White);
                 spriteBatch.DrawString(Values.titleFont, "Menu", new Vector2((graphics.PreferredBackBufferWidth / 2) - mButtonTextLength / 2 - 10,
                     (graphics.PreferredBackBufferHeight / 3) - mButtonTextHeight / 2), Color.Black);
             }
@@ -345,6 +348,8 @@ namespace TRACK
             #region Shop
             if (state == 3)
             {
+                spriteBatch.DrawString(Values.titleFont, "Shop", Values.gameNamePos, Color.White);
+                spriteBatch.DrawString(Values.descriptionFont, "Shop not implemented", Values.gameText1Pos, Color.White);
                 if (mBB.Intersects(btmButtonBB))
                 {
                     spriteBatch.FillRectangle(btmButtonBB, Color.Gray);
