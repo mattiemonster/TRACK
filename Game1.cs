@@ -12,7 +12,7 @@ namespace TRACK
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        // 0 = menu, 1 = game, 2 = game over, 3 = game over, 4 = shop
+        // 0 = menu, 1 = game, 2 = game over, 3 = Shop
         public int state = 0;
         public int mX, mY;
         public int score = 0, highScore = 0;
@@ -39,6 +39,7 @@ namespace TRACK
         public Rectangle sButtonBB;
         public Rectangle eButtonBB;
         public Rectangle shButtonBB;
+        public Rectangle btmButtonBB;
         public Rectangle mBB;
         
         public Game1()
@@ -81,6 +82,8 @@ namespace TRACK
             Vector2 mButtonSize = Values.titleFont.MeasureString("Menu");
             mButtonTextLength = (int)eButtonSize.X;
             mButtonTextHeight = (int)eButtonSize.Y;
+
+            btmButtonBB = new Rectangle(20, graphics.PreferredBackBufferHeight - 65, 200, 50);
         }
         
         protected override void LoadContent()
@@ -117,7 +120,7 @@ namespace TRACK
                 if (state == 0 && oldKs.IsKeyDown(Keys.Escape) != true)
                 {
                     Exit();
-                } else if (state == 1)
+                } else if (state == 1 || state == 3)
                 {
                     state = 0;
                     ResetGame();
@@ -174,15 +177,6 @@ namespace TRACK
 
             if (state == 0) /* Check current state is menu */
             {
-                /* Check if exit button is pressed */
-                if (ms.LeftButton == ButtonState.Pressed)
-                {
-                    if (mBB.Intersects(eButtonBB))
-                    {
-                        Exit();
-                    }
-                }
-
                 /* Check if the start button is pressed */
                 if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton == ButtonState.Released)
                 {
@@ -190,6 +184,16 @@ namespace TRACK
                     {
                         newHighscore = false;
                         state = 1;
+                    }
+
+                    if (mBB.Intersects(eButtonBB))
+                    {
+                        Exit();
+                    }
+
+                    if (mBB.Intersects(shButtonBB))
+                    {
+                        state = 3;
                     }
                 }
             }
@@ -204,7 +208,18 @@ namespace TRACK
                     }
                 }
             }
-            
+
+            if (state == 3)
+            {
+                if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton == ButtonState.Released)
+                {
+                    if (mBB.Intersects(btmButtonBB))
+                    {
+                        state = 0;
+                    }
+                }
+            }
+
 
             //if (state == 1 && !hasBegun)
             //{
@@ -270,6 +285,7 @@ namespace TRACK
             }
             #endregion
 
+            #region Game
             if (state == 1)
             {
                 if (!hasBegun)
@@ -300,7 +316,9 @@ namespace TRACK
                     }
                 }
             }
+            #endregion
 
+            #region Game Over Screen
             if (state == 2)
             {
                 spriteBatch.DrawString(Values.titleFont, Values.gameOver, Values.gameNamePos, Color.White);
@@ -322,6 +340,22 @@ namespace TRACK
                 spriteBatch.DrawString(Values.titleFont, "Menu", new Vector2((graphics.PreferredBackBufferWidth / 2) - mButtonTextLength / 2 - 10,
                     (graphics.PreferredBackBufferHeight / 3) - mButtonTextHeight / 2), Color.Black);
             }
+            #endregion
+
+            #region Shop
+            if (state == 3)
+            {
+                if (mBB.Intersects(btmButtonBB))
+                {
+                    spriteBatch.FillRectangle(btmButtonBB, Color.Gray);
+                }
+                else
+                {
+                    spriteBatch.FillRectangle(btmButtonBB, Color.White);
+                }
+                spriteBatch.DrawString(Values.titleFont, "Menu", new Vector2(btmButtonBB.X + 64, btmButtonBB.Y + 6), Color.Black);
+            }
+            #endregion
 
             spriteBatch.Draw(Values.crosshair, new Vector2(mX, mY), Color.White);
             spriteBatch.End();
