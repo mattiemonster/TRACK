@@ -93,6 +93,7 @@ namespace TRACK
             blocks.Clear();
             hasBegun = false;
             timer = 5 * 60;
+            lerpSpeed = 0.07f;
         }
         
         protected override void Update(GameTime gameTime)
