@@ -39,3 +39,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/DescriptionFont.spritefont
 
+#begin Sounds/RemoveBlock.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/RemoveBlock.wav
+

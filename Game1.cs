@@ -135,9 +135,10 @@ namespace TRACK
                     if (blocks[i].isDone)
                     {
                         blocks.RemoveAt(i);
+                        Values.blockRemoved.Play(1f, (float)r.NextDouble(), 1f);
                         timer = 60 * 5 + score;
-                        blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
                         lerpSpeed = lerpSpeed - 0.001f;
+                        blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
                         score += 1;
                     }
 

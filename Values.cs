@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework;
 
 namespace TRACK
@@ -14,6 +15,7 @@ namespace TRACK
         public static Texture2D crosshair;
         public static SpriteFont titleFont;
         public static SpriteFont descriptionFont;
+        public static SoundEffect blockRemoved;
         public static String gameName = "TRACK";
         public static String gameOver = "GAME OVER!";
         public static Vector2 gameNamePos = new Vector2(20, 15);
@@ -30,6 +32,7 @@ namespace TRACK
             crosshair = cm.Load<Texture2D>("Textures/Crosshair");
             titleFont = cm.Load<SpriteFont>("Fonts/TitleFont");
             descriptionFont = cm.Load<SpriteFont>("Fonts/DescriptionFont");
+            blockRemoved = cm.Load<SoundEffect>("Sounds/RemoveBlock");
         }
 
         public static void UnloadContent()
