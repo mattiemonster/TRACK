@@ -22,6 +22,8 @@ namespace TRACK
         public int eButtonTextHeight;
         public int mButtonTextLength;
         public int mButtonTextHeight;
+        public int shButtonTextLength;
+        public int shButtonTextHeight;
         public int timer = 60 * 5;
         public int previousScore = 0;
         public float lerpSpeed = 0.07f;
@@ -35,6 +37,7 @@ namespace TRACK
         public MouseState oldMs;
         public Rectangle sButtonBB;
         public Rectangle eButtonBB;
+        public Rectangle shButtonBB;
         public Rectangle mBB;
         
         public Game1()
@@ -58,12 +61,17 @@ namespace TRACK
 
         public void InitBoxes()
         {
-            sButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 100, (graphics.PreferredBackBufferHeight / 3) - 25, 200, 50);
             mBB = new Rectangle(0, 0, 8, 8);
+            sButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 100, (graphics.PreferredBackBufferHeight / 3) - 25, 200, 50);
             Vector2 sButtonSize = Values.titleFont.MeasureString("Start");
             sButtonTextLength = (int)sButtonSize.X;
             sButtonTextHeight = (int)sButtonSize.Y;
-            
+
+            shButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 100, (graphics.PreferredBackBufferHeight / 3) - 25, 200, 50);
+            Vector2 shButtonSize = Values.titleFont.MeasureString("Shop");
+            shButtonTextLength = (int)shButtonSize.X;
+            shButtonTextHeight = (int)shButtonSize.Y;
+
             eButtonBB = new Rectangle((graphics.PreferredBackBufferWidth / 2) - 75, (graphics.PreferredBackBufferHeight / 5) * 4, 150, 50);
             Vector2 eButtonSize = Values.titleFont.MeasureString("Exit");
             eButtonTextLength = (int)eButtonSize.X;
@@ -136,7 +144,7 @@ namespace TRACK
                     {
                         blocks.RemoveAt(i);
                         Values.blockRemoved.Play(1f, (float)r.NextDouble(), 1f);
-                        timer = 60 * 5 + score;
+                        timer = 60 * 5 + (score * 2);
                         lerpSpeed = lerpSpeed - 0.001f;
                         blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
                         score += 1;
