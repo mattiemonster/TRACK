@@ -45,6 +45,7 @@
     <Compile Include="Block.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="PlusOne.cs" />
+    <Compile Include="Powerup.cs" />
     <Compile Include="Primitives2D.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

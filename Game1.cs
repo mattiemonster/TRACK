@@ -33,7 +33,7 @@ namespace TRACK
         public bool newHighscore = false;
         public List<Block> blocks = new List<Block>();
         public List<PlusOne> plusOnes = new List<PlusOne>();
-        public Random r = new Random();
+        public static Random r = new Random();
         public KeyboardState ks;
         public KeyboardState oldKs;
         public MouseState ms;
@@ -202,7 +202,6 @@ namespace TRACK
                     if (plusOnes[i].isDone)
                     {
                         plusOnes.RemoveAt(i);
-                        Values.plusOneSound.Play(1f, (float)r.NextDouble(), 1f);
                         lerpSpeed = lerpSpeed + 0.001f;
                         score += 1;
                     }

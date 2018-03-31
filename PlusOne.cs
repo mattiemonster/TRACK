@@ -36,6 +36,7 @@ namespace TRACK
             }
             else
             {
+                Values.plusOneSound.Play(1f, (float)Game1.r.NextDouble(), 1f);
                 isDone = true;
             }
         }
