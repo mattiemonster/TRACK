@@ -168,8 +168,8 @@ namespace TRACK
                         timer = 60 * 5 + (score * 3);
                         lerpSpeed = lerpSpeed - 0.001f;
                         blocks.Add(new Block(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40), lerpSpeed));
-                        i = r.Next(1, 101);
-                        if (i == 50)
+                        i = r.Next(1, 51);
+                        if (i == 25)
                         {
                             plusOnes.Add(new PlusOne(r.Next(graphics.PreferredBackBufferWidth - 40), r.Next(graphics.PreferredBackBufferHeight - 40)));
                         }
